@@ -1,0 +1,19 @@
+{
+  "name": "@poc/host",
+  "private": true,
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev --port 4321",
+    "build": "astro build",
+    "preview": "astro preview --port 4321"
+  },
+  "dependencies": {
+    "@astrojs/node": "^9.5.4",
+    "astro": "^5.18.0"
+  },
+  "devDependencies": {
+    "@module-federation/astro": "workspace:*",
+    "vite": "^6.4.1"
+  }
+}

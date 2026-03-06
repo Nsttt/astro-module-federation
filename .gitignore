@@ -22,3 +22,7 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# module federation temp artifacts
+**/.__mf__temp/
+**/__mf__virtual/

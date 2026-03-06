@@ -1,0 +1,25 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getRemoteServerMessage } from 'astro_remote/server';
+
+const message = getRemoteServerMessage({
+	from: 'Astro frontmatter static import',
+});
+---
+
+<Layout title="Astro Host - SSR Static Import">
+	<main>
+		<h1>Astro Host (SSR static import)</h1>
+		<p id="ssr-static-message">{message}</p>
+		<p><a href="/">Back to CSR page</a></p>
+	</main>
+</Layout>
+
+<style>
+	main {
+		font-family: ui-sans-serif, system-ui, sans-serif;
+		max-width: 760px;
+		margin: 0 auto;
+		padding: 3rem 1rem;
+	}
+</style>

@@ -1,0 +1,50 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Astro Host - Module Federation PoC">
+	<main>
+		<h1>Astro Host (CSR Module Federation)</h1>
+		<p>
+			Host on <code>http://localhost:4321</code>, remote on <code>http://localhost:4173</code>.
+		</p>
+		<nav>
+			<a href="/ssr">SSR static import page</a>
+			<a href="/ssr-dynamic">SSR dynamic import page</a>
+			<a href="/astro-component">Remote Astro component page</a>
+		</nav>
+	<p id="remote-status">Loading remote module...</p>
+	<div id="remote-widget"></div>
+	</main>
+	<script>
+		import '../scripts/mf-host.js';
+	</script>
+</Layout>
+
+<style>
+	main {
+		font-family: ui-sans-serif, system-ui, sans-serif;
+		max-width: 760px;
+		margin: 0 auto;
+		padding: 3rem 1rem;
+	}
+
+	h1 {
+		margin: 0 0 0.8rem;
+		font-size: 2rem;
+	}
+
+	nav {
+		display: flex;
+		gap: 1rem;
+		margin: 0 0 1rem;
+	}
+
+	#remote-status {
+		font-weight: 600;
+	}
+
+	#remote-widget :global(*) {
+		box-sizing: border-box;
+	}
+</style>

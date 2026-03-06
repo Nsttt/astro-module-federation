@@ -1,46 +1,77 @@
-# Astro Starter Kit: Basics
+# Astro Module Federation PoC (2 Astro apps)
 
-```sh
-pnpm create astro@latest -- --template basics
+`host` and `remote` are both Astro apps:
+
+- Host app: `apps/host` (`http://localhost:4321`)
+- Remote app: `apps/remote` (`http://localhost:4173`)
+- Astro integration package: `packages/astro` (`@module-federation/astro`)
+
+Module Federation plugin: `@module-federation/vite`.
+Astro bridge package in this repo: `@module-federation/astro`.
+
+## Run
+
+1. Install:
+
+```bash
+pnpm install
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+2. Start remote:
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+```bash
+pnpm dev:remote
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+3. Start host (new terminal):
 
-## 🧞 Commands
+```bash
+pnpm dev:host
+```
 
-All commands are run from the root of the project, from a terminal:
+4. Open:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+- Host: `http://localhost:4321`
+- Remote standalone: `http://localhost:4173`
+- Host SSR static import page: `http://localhost:4321/ssr`
+- Host SSR dynamic import page: `http://localhost:4321/ssr-dynamic`
 
-## 👀 Want to learn more?
+## Build checks
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+```bash
+pnpm build:remote
+pnpm build:host
+```
+
+## Federation wiring
+
+- Remote exposes `./widget` and `./server` in `apps/remote/astro.config.mjs`.
+- Host consumes `astro_remote/widget` from an Astro page script (`apps/host/src/pages/index.astro`).
+- Host consumes `astro_remote/server` from Astro frontmatter (`apps/host/src/pages/ssr*.astro`).
+- Host remote mapping lives in `apps/host/astro.config.mjs` via `mf-manifest.json`.
+
+## Package usage
+
+```ts
+import { defineConfig } from 'astro/config';
+import { moduleFederation } from '@module-federation/astro';
+
+export default defineConfig({
+  integrations: [
+    moduleFederation({
+      name: 'astro_host',
+      remotes: {
+        astro_remote: 'astro_remote@http://localhost:4173/mf-manifest.json',
+      },
+    }),
+  ],
+});
+```
+
+## Astro integration behavior
+
+- Remote strings are normalized to explicit MF remote objects.
+- `dts` defaults to `false`.
+- Host auto-init is injected into Astro `page` stage so `.astro` script imports work in dev.
+- SSR remote imports in Astro frontmatter are handled by an SSR transform path in `@module-federation/astro`.
+- Dev target defaults to runtime inference (`ENV_TARGET = undefined`) so client/server contexts can coexist.
