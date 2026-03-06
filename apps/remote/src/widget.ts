@@ -8,7 +8,16 @@ const baseStyles = {
 	boxShadow: '0 12px 32px rgba(2, 6, 23, 0.25)',
 };
 
-export function renderRemoteWidget(mountPoint, payload = {}) {
+export type RemoteWidgetPayload = {
+	from?: string;
+	loadedAt?: string;
+	[key: string]: unknown;
+};
+
+export function renderRemoteWidget(
+	mountPoint: HTMLElement | null,
+	payload: RemoteWidgetPayload = {},
+): void {
 	if (!mountPoint) return;
 
 	const wrapper = document.createElement('section');

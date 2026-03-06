@@ -2,6 +2,8 @@
 import { defineConfig } from 'astro/config';
 import { moduleFederation } from '@module-federation/astro';
 
+const isDev = process.argv.some((arg) => arg.includes('dev'));
+
 export default defineConfig({
   vite: {
     server: {
@@ -14,12 +16,20 @@ export default defineConfig({
 				filename: 'remoteEntry.js',
 				varFilename: 'remoteEntry.global.js',
 				manifest: true,
-				dts: false,
-					exposes: {
-						'./widget': './src/widget.js',
-						'./server': './src/server.js',
-						'./RemoteCard': './src/RemoteCard.astro',
-					},
+				dts: isDev
+					? false
+					: {
+							tsConfigPath: './tsconfig.json',
+							generateTypes: {
+								extractRemoteTypes: true,
+							},
+							consumeTypes: false,
+						},
+        exposes: {
+          './widget': './src/widget.ts',
+          './server': './src/server.ts',
+          './RemoteCard': './src/RemoteCard.astro',
+        },
     }),
   ],
 });

@@ -20,7 +20,22 @@ export default defineConfig({
             astro_remote: '../remote',
           },
         },
-        dts: false,
+        dts: {
+          tsConfigPath: './tsconfig.json',
+          generateTypes: false,
+          consumeTypes: {
+            abortOnError: false,
+            family: 6,
+            maxRetries: 20,
+            remoteTypeUrls: {
+              astro_remote: {
+                alias: 'astro_remote',
+                zip: 'http://localhost:4173/dist/@mf-types.zip',
+                api: 'http://localhost:4173/dist/@mf-types.d.ts',
+              },
+            },
+          },
+        },
       }),
   ],
 });

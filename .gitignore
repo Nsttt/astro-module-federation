@@ -26,3 +26,5 @@ pnpm-debug.log*
 # module federation temp artifacts
 **/.__mf__temp/
 **/__mf__virtual/
+**/@mf-types/
+**/.mf/

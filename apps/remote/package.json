@@ -4,7 +4,7 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev --port 4173",
+    "dev": "pnpm run build && astro dev --port 4173",
     "build": "astro build",
     "preview": "astro preview --port 4173"
   },

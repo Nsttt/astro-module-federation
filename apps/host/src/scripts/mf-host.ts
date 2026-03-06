@@ -1,11 +1,11 @@
 const mountPoint = document.getElementById('remote-widget');
-const status = document.getElementById('remote-status');
+const statusEl = document.getElementById('remote-status');
 
-const setStatus = (text) => {
-	if (status) status.textContent = text;
+const setStatus = (text: string): void => {
+	if (statusEl) statusEl.textContent = text;
 };
 
-const showError = (error) => {
+const showError = (error: string): void => {
 	if (!mountPoint) return;
 	mountPoint.innerHTML = '';
 	const pre = document.createElement('pre');
@@ -23,12 +23,13 @@ const start = async () => {
 		setStatus('Remote loaded from astro_remote/widget');
 	} catch (error) {
 		setStatus('Remote load failed');
-		showError(error?.stack || error);
+		const details = error instanceof Error ? error.stack || error.message : String(error);
+		showError(details);
 	}
 };
 
 setTimeout(() => {
-	if (status?.textContent === 'Loading remote module...') {
+	if (statusEl?.textContent === 'Loading remote module...') {
 		setStatus('Still waiting for remote. Check remote dev server on :4173.');
 	}
 }, 4000);

@@ -24,6 +24,7 @@ Notes:
 
 - `name@url` and plain URL remotes are normalized into explicit remote objects.
 - `dts` defaults to `false` unless explicitly provided.
+- With `dts: true`, `.astro` exposes are auto-wrapped for type generation, so users can expose `.astro` files directly.
 - Host runtime auto-init is injected into Astro `page`.
 - In `astro dev`, `ENV_TARGET` defaults to `undefined` so runtime infers browser vs node context.
 - `mode: 'client' | 'server'` maps to MF target `'web' | 'node'` if you want to force one side.
