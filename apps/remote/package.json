@@ -4,9 +4,9 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "pnpm run build && astro dev --port 4173",
+    "dev": "pnpm run build && astro dev",
     "build": "astro build",
-    "preview": "astro preview --port 4173"
+    "preview": "astro preview"
   },
   "dependencies": {
     "astro": "^5.18.0"

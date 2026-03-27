@@ -30,7 +30,7 @@ const start = async () => {
 
 setTimeout(() => {
 	if (statusEl?.textContent === 'Loading remote module...') {
-		setStatus('Still waiting for remote. Check remote dev server on :4173.');
+		setStatus('Still waiting for remote. Check remote dev server on :4322.');
 	}
 }, 4000);
 

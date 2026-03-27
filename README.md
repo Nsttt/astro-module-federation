@@ -3,7 +3,7 @@
 `host` and `remote` are both Astro apps:
 
 - Host app: `apps/host` (`http://localhost:4321`)
-- Remote app: `apps/remote` (`http://localhost:4173`)
+- Remote app: `apps/remote` (`http://localhost:4322`)
 - Astro integration package: `packages/astro` (`@module-federation/astro`)
 
 Module Federation plugin: `@module-federation/vite`.
@@ -32,7 +32,7 @@ pnpm dev:host
 4. Open:
 
 - Host: `http://localhost:4321`
-- Remote standalone: `http://localhost:4173`
+- Remote standalone: `http://localhost:4322`
 - Host SSR static import page: `http://localhost:4321/ssr`
 - Host SSR dynamic import page: `http://localhost:4321/ssr-dynamic`
 
@@ -75,7 +75,7 @@ export default defineConfig({
     moduleFederation({
       name: 'astro_host',
       remotes: {
-        astro_remote: 'astro_remote@http://localhost:4173/mf-manifest.json',
+        astro_remote: 'astro_remote@http://localhost:4322/mf-manifest.json',
       },
     }),
   ],

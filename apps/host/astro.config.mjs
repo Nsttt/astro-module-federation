@@ -6,6 +6,12 @@ import { moduleFederation } from '@module-federation/astro';
 // https://astro.build/config
 export default defineConfig({
   output: 'server',
+  server: {
+    port: 4321,
+  },
+  preview: {
+    port: 4321,
+  },
   adapter: node({
     mode: 'standalone',
   }),
@@ -13,7 +19,7 @@ export default defineConfig({
     moduleFederation({
         name: 'astro_host',
         remotes: {
-          astro_remote: 'astro_remote@http://localhost:4173/mf-manifest.json',
+          astro_remote: 'astro_remote@http://localhost:4322/mf-manifest.json',
         },
         ssr: {
           localRemotes: {
@@ -30,8 +36,8 @@ export default defineConfig({
             remoteTypeUrls: {
               astro_remote: {
                 alias: 'astro_remote',
-                zip: 'http://localhost:4173/dist/@mf-types.zip',
-                api: 'http://localhost:4173/dist/@mf-types.d.ts',
+                zip: 'http://localhost:4322/dist/@mf-types.zip',
+                api: 'http://localhost:4322/dist/@mf-types.d.ts',
               },
             },
           },

@@ -5,9 +5,15 @@ import { moduleFederation } from '@module-federation/astro';
 const isDev = process.argv.some((arg) => arg.includes('dev'));
 
 export default defineConfig({
+  server: {
+    port: 4322,
+  },
+  preview: {
+    port: 4322,
+  },
   vite: {
     server: {
-      origin: 'http://localhost:4173',
+      origin: 'http://localhost:4322',
     },
   },
   integrations: [

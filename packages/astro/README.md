@@ -13,7 +13,7 @@ export default defineConfig({
     moduleFederation({
       name: 'astro_host',
       remotes: {
-        astro_remote: 'astro_remote@http://localhost:4173/mf-manifest.json',
+        astro_remote: 'astro_remote@http://localhost:4322/mf-manifest.json',
       },
     }),
   ],
