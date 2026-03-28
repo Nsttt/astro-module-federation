@@ -17,13 +17,24 @@ Astro bridge package in this repo: `@module-federation/astro`.
 pnpm install
 ```
 
-2. Start remote:
+2. Start both apps from the root:
+
+```bash
+pnpm dev
+```
+
+This starts:
+
+- remote on `4322`
+- host on `4321`
+
+3. Or start remote only:
 
 ```bash
 pnpm dev:remote
 ```
 
-3. Start host (new terminal):
+4. Start host only (new terminal):
 
 ```bash
 pnpm dev:host

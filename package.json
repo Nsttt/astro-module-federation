@@ -4,7 +4,7 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "pnpm --filter @module-federation/astro build && pnpm --filter @poc/host dev",
+    "dev": "pnpm --filter @module-federation/astro build && pnpm --parallel --filter @poc/remote --filter @poc/host dev",
     "dev:host": "pnpm --filter @module-federation/astro build && pnpm --filter @poc/host dev",
     "dev:remote": "pnpm --filter @module-federation/astro build && pnpm --filter @poc/remote dev",
     "build": "pnpm --filter @module-federation/astro build && pnpm -r --filter \"@poc/*\" build",
