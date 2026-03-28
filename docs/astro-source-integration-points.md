@@ -66,9 +66,11 @@ Implemented in this PoC package:
 - inject MF host auto-init into Astro `page` stage so `.astro` page scripts can consume remotes in dev/build.
 - keep `ENV_TARGET` as `undefined` in dev by default for mixed client/server context inference.
 - SSR transform for federated `__loadRemote__` modules so `.astro` frontmatter imports can execute in server context.
+- same SSR transform path works for remote Astro components, so `await import('remote/Component')` can feed `<Component />` rendering in host frontmatter.
 - SSR source-loader fallback path for remote `.../server` modules in dev (`remoteBase/src/<module>.js`) to avoid current Node ESM loader/runtime friction.
 
 ## Remaining Constraints
 
 - SSR path depends on SSR-safe remote modules (no DOM usage).
+- For non-Astro providers, server manifests need `ssrRemoteEntry`; MF runtime will prefer that entry in Node/server execution.
 - `mf-vite` still emits serve-time warnings around `plugin:add-entry` (`emitFile()` in serve mode).

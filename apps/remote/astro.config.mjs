@@ -7,9 +7,11 @@ const isDev = process.argv.some((arg) => arg.includes('dev'));
 export default defineConfig({
   server: {
     port: 4322,
+    strictPort: true,
   },
   preview: {
     port: 4322,
+    strictPort: true,
   },
   vite: {
     server: {

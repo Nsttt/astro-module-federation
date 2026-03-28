@@ -29,12 +29,17 @@ pnpm dev:remote
 pnpm dev:host
 ```
 
+Both apps use fixed ports with `strictPort: true`.
+If `4321` or `4322` is already taken, Astro now fails fast instead of silently moving to another port and breaking federation URLs.
+
 4. Open:
 
 - Host: `http://localhost:4321`
 - Remote standalone: `http://localhost:4322`
 - Host SSR static import page: `http://localhost:4321/ssr`
 - Host SSR dynamic import page: `http://localhost:4321/ssr-dynamic`
+- Host SSR component static import page: `http://localhost:4321/astro-component`
+- Host SSR component dynamic import page: `http://localhost:4321/astro-component-dynamic`
 
 ## Build checks
 
@@ -49,6 +54,7 @@ pnpm build:host
 - Host consumes `astro_remote/widget` from an Astro page script (`apps/host/src/pages/index.astro`).
 - Host consumes `astro_remote/server` from Astro frontmatter (`apps/host/src/pages/ssr*.astro`).
 - Host consumes `astro_remote/RemoteCard` directly from Astro syntax (`apps/host/src/pages/astro-component.astro`).
+- Host also consumes `astro_remote/RemoteCard` via `await import()` in Astro frontmatter and renders it as `<RemoteCard />` (`apps/host/src/pages/astro-component-dynamic.astro`).
 - Host remote mapping lives in `apps/host/astro.config.mjs` via `mf-manifest.json`.
 
 ## DTS wiring
@@ -88,4 +94,12 @@ export default defineConfig({
 - `dts` defaults to `false`.
 - Host auto-init is injected into Astro `page` stage so `.astro` script imports work in dev.
 - SSR remote imports in Astro frontmatter are handled by an SSR transform path in `@module-federation/astro`.
+- That SSR path supports remote Astro components as well as plain server functions, including `await import('remote/Component')` followed by `<Component />`.
 - Dev target defaults to runtime inference (`ENV_TARGET = undefined`) so client/server contexts can coexist.
+
+## Non-Astro SSR providers
+
+- For remote providers built outside Astro, the important contract is an MF manifest with `ssrRemoteEntry`.
+- `mf-vite` already emits `ssrRemoteEntry` in its manifest, and MF runtime prefers that entry on the server.
+- Rsbuild/Rslib providers should emit SSR assets with `target: 'dual'` (or legacy `ssr: true`).
+- Astro as consumer keeps using MF runtime on the server; the loaded module can then be rendered as `<Component />` if it exports a server-renderable component.

@@ -8,9 +8,11 @@ export default defineConfig({
   output: 'server',
   server: {
     port: 4321,
+    strictPort: true,
   },
   preview: {
     port: 4321,
+    strictPort: true,
   },
   adapter: node({
     mode: 'standalone',
